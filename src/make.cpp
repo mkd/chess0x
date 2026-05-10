@@ -1022,11 +1022,10 @@ bool isOtherKingAttacked()
 // If found valid, the move is returned in the &move variable.
 bool isValidTextMove(string userInputMove, Move &move)
 {
-    char userMove[userInputMove.length() + 1];
+    char userMove[16];
     strcpy(userMove, userInputMove.c_str());
 
     unsigned char userFrom, userTo, userPromote;
-    bool moveFound;
     int i;
 
     if (strlen(userMove) > 3)
@@ -1062,7 +1061,6 @@ bool isValidTextMove(string userInputMove, Move &move)
         }
     }
 
-    moveFound = false;
     for (i = board.moveBufLen[0]; i < board.moveBufLen[1]; i++)
     {
         if ((board.moveBuffer[i].getFrom() == userFrom) && (board.moveBuffer[i].getTosq() == userTo))

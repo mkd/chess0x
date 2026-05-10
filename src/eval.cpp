@@ -53,7 +53,7 @@ int Board::eval()
     int whitetotalmat, blacktotalmat;
     int whitetotal, blacktotal;
     bool endgame;
-    Bitboard temp, whitepassedpawns, blackpassedpawns, allpieces;
+    Bitboard temp, whitepassedpawns, blackpassedpawns;
 
 
     // 1. count material
@@ -81,10 +81,6 @@ int Board::eval()
     blackqueens = bitCnt(board.blackQueens);
     blacktotalmat = 3 * blackknights + 3 * blackbishops + 5 * blackrooks + 10 * blackqueens;
     blacktotal = blackpawns + blackknights + blackbishops + blackrooks + blackqueens;
-    allpieces = board.whitePawns | board.whiteKnights | board.whiteBishops |
-                board.whiteRooks | board.whiteQueens | board.whiteKing |
-                board.blackPawns | board.blackKnights | board.blackBishops |
-                board.blackRooks | board.blackQueens | board.blackKing;
 
 
     // 3. check if we are at the endgame: anything less than a

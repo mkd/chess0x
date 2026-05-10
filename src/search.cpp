@@ -454,14 +454,11 @@ void Board::displaySearchStats(int mode, int depth, int score)
     char sanMove[12], timestring[8];
     float dt = (timer.getms() - msStart) / 1000.0;
     int netScore = score;
-    int z = 1;
-
 
     // '+' is advantage for White, '-' is advantage for Black
     if (board.nextMove)
     {
         netScore *= -1;
-        z = -1;
     }
 
 
@@ -728,18 +725,18 @@ void mstostring(uint64_t dt, char *timestring)
         hh = dt/3600000;
         mm = (dt - 3600000*hh)/60000;
         ss = (dt - 3600000*hh - 60000*mm)/1000;
-        sprintf(timestring, "%02" PRIu64 ":%01" PRIu64 ":%02" PRIu64 "", hh, mm, ss);
+        snprintf(timestring, sizeof(timestring), "%02" PRIu64 ":%01" PRIu64 ":%02" PRIu64 "", hh, mm, ss);
     }
     else if (dt > 60000) 
     {      
         mm = dt/60000;
         ss = (dt - 60000*mm)/1000;
-        sprintf(timestring, "%02" PRIu64 ":%02" PRIu64 "", mm, ss);
+        snprintf(timestring, sizeof(timestring), "%02" PRIu64 ":%02" PRIu64 "", mm, ss);
     }
-    else if (dt > 10000)        sprintf(timestring, "%6.1f%s", float(dt/1000.0), "s");
-    else if (dt > 1000)         sprintf(timestring, "%6.2f%s", float(dt/1000.0), "s");
-    else if (dt > 0)            sprintf(timestring, "%5" PRIu64 "ms", dt);
-    else                        sprintf(timestring, "0ms");
+    else if (dt > 10000)        snprintf(timestring, sizeof(timestring), "%6.1f%s", float(dt/1000.0), "s");
+    else if (dt > 1000)         snprintf(timestring, sizeof(timestring), "%6.2f%s", float(dt/1000.0), "s");
+    else if (dt > 0)            snprintf(timestring, sizeof(timestring), "%5" PRIu64 "ms", dt);
+    else                        snprintf(timestring, sizeof(timestring), "0ms");
 }
 
 

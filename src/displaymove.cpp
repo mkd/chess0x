@@ -139,7 +139,7 @@ void displayUCIPV()
 //  '+'is added for check, '#' is added for mate.
 bool toSan(Move &move, char *sanMove)
 {
-    unsigned int i, j, k, ibuf, from, to, piece, capt, prom, ambigfile, ambigrank;
+    unsigned int i, j, k, ibuf, from, to, piece, prom, ambigfile, ambigrank;
     int asciiShift;
     bool legal, check, mate, ambig;
 
@@ -147,7 +147,6 @@ bool toSan(Move &move, char *sanMove)
     piece = move.getPiece();
     from = move.getFrom();
     to = move.getTosq();
-    capt = move.getCapture();
     prom = move.getPromo();
     ibuf = 0;
     ambig = false;
@@ -156,7 +155,7 @@ bool toSan(Move &move, char *sanMove)
     legal = false;
     check = false;
     mate = false;
-    sprintf(sanMove, "");
+    snprintf(sanMove, sizeof(sanMove), "");
 
 
     //  Generate all pseudo-legal moves to be able to remove any ambiguities 
@@ -228,17 +227,17 @@ bool toSan(Move &move, char *sanMove)
         // start building the string
         if (!move.isPawnMove()) 
         {
-            sprintf(sanMove, "%s", PIECECHARS[piece]);
+            snprintf(sanMove, sizeof(sanMove), "%s", PIECECHARS[piece]);
             if (ambig) 
             {
                 if (ambigfile)
                 {
-                    if (ambigrank) sprintf(sanMove, "%s%c%d", sanMove, FILES[from] + asciiShift - 1,RANKS[from]);
-                    else sprintf(sanMove, "%s%d", sanMove, RANKS[from]);
+                    if (ambigrank) snprintf(sanMove, sizeof(sanMove), "%s%c%d", sanMove, FILES[from] + asciiShift - 1,RANKS[from]);
+                    else snprintf(sanMove, sizeof(sanMove), "%s%d", sanMove, RANKS[from]);
                 }
                 else
                 {
-                    sprintf(sanMove, "%s%c", sanMove, FILES[from] + asciiShift - 1);
+                    snprintf(sanMove, sizeof(sanMove), "%s%c", sanMove, FILES[from] + asciiShift - 1);
                 }
             }
         }
@@ -246,17 +245,17 @@ bool toSan(Move &move, char *sanMove)
         {
             if (move.isCapture()) 
             {
-                sprintf(sanMove, "%s%c", sanMove, FILES[from] + asciiShift - 1);
+                snprintf(sanMove, sizeof(sanMove), "%s%c", sanMove, FILES[from] + asciiShift - 1);
             }
         }
-        if (move.isCapture()) sprintf(sanMove, "%sx", sanMove);
-        sprintf(sanMove, "%s%c%d", sanMove, FILES[to] + asciiShift - 1, RANKS[to]);
-        if (move.isEnpassant()) sprintf(sanMove, "%s", sanMove);
-        if (move.isPromo()) sprintf(sanMove, "%s=%s", sanMove, PIECECHARS[prom]);
+        if (move.isCapture()) snprintf(sanMove, sizeof(sanMove), "%sx", sanMove);
+        snprintf(sanMove, sizeof(sanMove), "%s%c%d", sanMove, FILES[to] + asciiShift - 1, RANKS[to]);
+        if (move.isEnpassant()) snprintf(sanMove, sizeof(sanMove), "%s", sanMove);
+        if (move.isPromo()) snprintf(sanMove, sizeof(sanMove), "%s=%s", sanMove, PIECECHARS[prom]);
         if (check)
         {
-            if (mate) sprintf(sanMove, "%s#", sanMove); 
-            else sprintf(sanMove, "%s+", sanMove);
+            if (mate) snprintf(sanMove, sizeof(sanMove), "%s#", sanMove); 
+            else snprintf(sanMove, sizeof(sanMove), "%s+", sanMove);
         }
         return true;
     }

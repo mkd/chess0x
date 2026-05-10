@@ -95,12 +95,11 @@ bool readFen(char *filename)
 // Setup a board position from a FEN string.
 void setupFen(char *fen, char *fencolor, char *fencastling, char *fenenpassant, int fenhalfmoveclock, int fenfullmovenumber)
 {
-    int i, file, rank, counter, piece;
+    int i, file, rank, counter;
     int whiteCastle, blackCastle, next, epsq;
 
 
     // initially clear the board 
-    piece = 0;
     for (i = 0; i < 64; i++)
         board.square[i] = EMPTY;
 

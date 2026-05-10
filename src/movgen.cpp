@@ -54,14 +54,12 @@
 // and the new first free location is returned
 int movegen(int index)
 {
-    unsigned char opponentSide;
     unsigned int from, to;
     Bitboard tempPiece, tempMove;
     Bitboard targetBitmap, freeSquares;
     Move move;
 
     move.clear();
-    opponentSide = !board.nextMove;
     freeSquares = ~board.occupiedSquares;
 
     // Black to move
@@ -432,7 +430,6 @@ int movegen(int index)
 // the list by discarding 'bad' moves. 
 int captgen(int index)
 {
-    unsigned char opponentSide;
     unsigned int from, to;
     int ifirst;
     Bitboard tempPiece, tempMove;
@@ -441,7 +438,6 @@ int captgen(int index)
 
     ifirst = index;
     move.clear();
-    opponentSide = !board.nextMove;
     freeSquares = ~board.occupiedSquares;
 
 

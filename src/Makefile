@@ -17,22 +17,30 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-
-### Figure the operating system name
-UNAME = $(shell uname)
-
+### Figure the operating system name and architecture
+UNAME_S = $(shell uname -s)
+UNAME_M = $(shell uname -m)
 
 ### Executable name
 APP = chess0x
 
-
 ### Object files
-OBJS = bit.o board.o book.o cache.o cmd.o data.o displaymove.o eval.o fen.o hash.o io.o main.o make.o move.o movgen.o perft.o search.o see.o timer.o uci.o 
+OBJS = bit.o board.o book.o cache.o cmd.o data.o displaymove.o eval.o fen.o hash.o io.o main.o make.o move.o movgen.o perft.o search.o see.o timer.o uci.o
 
-
-### Compilation flags
-CXXFLAGS += -O3 -Ofast -Wall -Wcast-qual -std=c++17 -fno-exceptions -fno-rtti -m64 -mpopcnt -flto
+### Base Compilation flags (Aggressive Optimizations)
+# -O3 + -ffast-math replaces the deprecated -Ofast
+# -march=native tells the compiler to optimize specifically for the CPU it's compiling on
+CXXFLAGS += -O3 -ffast-math -march=native -Wall -Wcast-qual -std=c++17 -fno-exceptions -fno-rtti -flto
 DEPENDFLAGS += -std=c++17
+
+### Architecture-specific flags
+# Only apply Intel/AMD specific flags if we are on an x86_64 architecture
+ifeq ($(UNAME_M),x86_64)
+    CXXFLAGS += -m64 -mpopcnt
+endif
+ifeq ($(UNAME_M),amd64)
+    CXXFLAGS += -m64 -mpopcnt
+endif
 
 
 ### Build targets
