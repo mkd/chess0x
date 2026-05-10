@@ -22,7 +22,7 @@ From v0.7 to v1.0
 - Proper check extensions
 - Proper Zobrist cache implementation
 - Improved evaluation function (especially king safety and phase detection)
-- Simple Machine Learning (SML): Chess0 now learns from previous games
+- Simple Machine Learning (SML): Chess0x now learns from previous games
 
 
 From v0.6 to v0.7

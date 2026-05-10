@@ -1,14 +1,14 @@
-// This file is part of Chess0, a computer chess program based on Winglet chess
+// This file is part of Chess0x, a computer chess program based on Winglet chess
 // by Stef Luijten.
 //
 // Copyright (C) 2022 Claudio M. Camacho
 //
-// Chess0 is free software: you can redistribute it and/or modify
+// Chess0x is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// Chess0 is distributed in the hope that it will be useful,
+// Chess0x is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
@@ -45,7 +45,7 @@
 
 // movegen
 //
-// This is Chess0 pseudo-legal bitboard move generator,
+// This is Chess0x pseudo-legal bitboard move generator,
 // using magic multiplication instead of rotated bitboards.
 //
 // There is no check if a move leaves the king in check.
