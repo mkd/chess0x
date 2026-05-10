@@ -1,14 +1,15 @@
 # Overview
-Chess0 [pronounced ***chess-ou***] is a computer chess program developed in C++
+Chess0x [pronounced ***chess-ou***] is a computer chess program developed in C++
 and loosely based on [Winglet](https://www.chessprogramming.org/Winglet), by
-Stef Luijten. Chess0 was developed as a final year project for my Computer
-Science degree and, therefore, it is not the most competitive chess engine you
-can find.
+Stef Luijten. Chess0x is an evolution from [Chess0](https://github.com/mkd/chess0),
+a C++ chess engine developed as a final year project for my Computer
+Science degree for learning purposes (with very few optimizations) and, therefore,
+it is not the most competitive chess engine you can find.
 
 If you need a modern engine with proper chess skills, you should check out
 [Stockfish](https://github.com/official-stockfish/Stockfish).
 
-Chess0's current approximate ELO rating is around ~2200, based on the Elometer
+Chess0x' current approximate ELO rating is around ~2200, based on the Elometer
 test (http://www.elometer.net), various tournaments against other rated chess
 engines, and a series of games played on the
 [Free Internet Chess Server (FICS)](https://www.freechess.org/).
@@ -16,23 +17,23 @@ engines, and a series of games played on the
 
 
 # Files
-This distribution of Chess0 consists of the following files:
-- [README.md](https://github.com/mkd/chess0/blob/master/README.md), the file
+This distribution of Chess0x consists of the following files:
+- [README.md](https://github.com/mkd/chess0x/blob/master/README.md), the file
   you are currently reading.
-- [copying.txt](https://github.com/mkd/chess0/blob/master/copying.txt), a text
+- [copying.txt](https://github.com/mkd/chess0x/blob/master/copying.txt), a text
   file containing the GNU General Public License version 3.
 - [TODO](https://github.com/mkd/chess0/blob/master/TODO), a list of improvements
   and future features (i.e., a backlog).
-- [Changelog](https://github.com/mkd/chess0/blob/master/Changelog), a readable
+- [Changelog](https://github.com/mkd/chess0x/blob/master/Changelog), a readable
   list of changes introduced in every version.
 - [book_count.sh](https://github.com/mkd/chess0/blob/master/book_count.sh), a
   script to count the number of opening entries in the book.
-- [lines.sh](https://github.com/mkd/chess0/blob/master/lines.sh), a script to
+- [lines.sh](https://github.com/mkd/chess0x/blob/master/lines.sh), a script to
   count the number of lines in the source code.
-- [src](https://github.com/mkd/chess0/blob/master/src), a subdirectory
+- [src](https://github.com/mkd/chess0x/blob/master/src), a subdirectory
   containing the full source code, including a Makefile that can be used
-  to compile Chess0 on Unix-like systems.
-- [src/benchmark.py](https://github.com/mkd/chess0/blob/master/src/benchmark.py),
+  to compile Chess0x on Unix-like systems.
+- [src/benchmark.py](https://github.com/mkd/chess0x/blob/master/src/benchmark.py),
   a simple script written in Python3 that tests many different chess positions
   using the python-chess UCI library, telling the speed of search, nodes and
   time to complete the tests. The script is engine-agnostic, and it can be 
@@ -40,26 +41,26 @@ This distribution of Chess0 consists of the following files:
 
 
 
-# Building Chess0
-The default [Makefile](https://github.com/mkd/chess0/blob/master/src/Makefile)
-in [src](https://github.com/mkd/chess0/blob/master/src) contains the instructions
-to build Chess0 in Unix systems, and it has been tested both on Linux and MacOS.
+# Building Chess0x
+The default [Makefile](https://github.com/mkd/chess0x/blob/master/src/Makefile)
+in [src](https://github.com/mkd/chess0x/blob/master/src) contains the instructions
+to build Chess0x in Unix systems, and it has been tested both on Linux and MacOS.
 
 Cross-compilation to Windows 64-bit should be possible using e.g., mingw32;
 however, I haven't taken the time to add that in the Makefile yet.
 
 
 
-# Using Chess0
+# Using Chess0x
 ## Using the command line interface (CLI)
-Chess0 was built with research and learn purposes in mind. That is, by design,
-I didn't develop Chess0 to be a super-portable, highly competitive chess
+Chess0x was built with research and learn purposes in mind. That is, by design,
+I didn't develop Chess0x to be a super-portable, highly competitive chess
 engine. Instead, I focused on code clarity and ease of use in the command line
 interface (CLI).
 
-When you run Chess0, it prompts you with a ready-to-move interface like this:
+When you run Chess0x, it prompts you with a ready-to-move interface like this:
 ```
-Welcome to Chess0!
+Welcome to Chess0x!
 
 White (1):
 ```
@@ -150,7 +151,7 @@ Besides entering moves, this prompt also is used to enter different commands to
 change the type of the game as well as configuring some settings. Just type
 'help' to see the following list:
 ```
-Welcome to Chess0!
+Welcome to Chess0x!
 
 White (1): help
 analyze  auto  book  cache  depth  eval  fen  flip
@@ -161,7 +162,7 @@ think  uci  verbose  undo  version
 ```
 
 For any of those settings, you can simply type 'help COMMAND' for every
-setting and Chess0 will show you further instructions on how to use
+setting and Chess0x will show you further instructions on how to use
 a specific settings. For example:
 
 ```
@@ -176,20 +177,20 @@ cache [on | off]
 ```
 
 ## Using a graphical user interface (GUI)
-Thanks to the UCI protocol, you can use Chess0 with your favorite chess GUI. 
+Thanks to the UCI protocol, you can use Chess0x with your favorite chess GUI. 
 Chess GUI applications use the UCI protocol to communicate with the engine, so
 you can analyze your games, play against it or even run a computer chess
 tournament from your own computer.
 
 I personally use [ScidvsMac](http://scidvspc.sourceforge.net/) (a version
-of ScidvsPC for MacOS) to test Chess0. There's a ton of free chess graphical
+of ScidvsPC for MacOS) to test Chess0x. There's a ton of free chess graphical
 interfaces for UCI chess engines, just pick your favorite one.
 
 
 
 # Implementation
-Chess0 is implemented mainly in C++, with numerous functions written in pure C
-for performance reasons. When I wrote the first version of Chess0, I tried to
+Chess0x is implemented mainly in C++, with numerous functions written in pure C
+for performance reasons. When I wrote the first version of Chess0x, I tried to
 use only C++ with strict object orientation. This made the code much more
 readable and maintainable. However, C++ objects starated to become a real
 bottleneck as the search tree grew. So finally, I decided to optimize core
@@ -198,10 +199,10 @@ speed would increase exponentially.
 
 
 
-# Contributing to Chess0
+# Contributing to Chess0x
 This is not one of my most active projects at the moment. There're way too many
 great things out there to stay inside coding another chess engine for ages
-(it's a work that never ends!). So, if you have tried Chess0 and would like to
+(it's a work that never ends!). So, if you have tried Chess0x and would like to
 improve the current source code in any way, please go ahead!
 
 
@@ -234,6 +235,6 @@ improve the current source code in any way, please go ahead!
 - **Universal Chess Interface (UCI) protocol:**
   http://wbec-ridderkerk.nl/html/UCIProtocol.html
 
-- **Opening book:** Chess0 comes with a built-in openings book (3500+
+- **Opening book:** Chess0x comes with a built-in openings book (3500+
   positions). The book is always in use by default, however you can disable
   it with the command 'book off'.
