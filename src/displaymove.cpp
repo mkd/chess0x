@@ -207,7 +207,8 @@ bool toSan(Move &move, char *sanMove)
 
 
     //  construct the SAN string:
-    if (!legal) 
+    //  construct the SAN string:
+    if (!legal)
     {
         strcpy(sanMove, "(null)");
         return false;
@@ -218,45 +219,63 @@ bool toSan(Move &move, char *sanMove)
         {
             strcpy(sanMove, "0-0");
             return true;
-        }   
+        }
         if (move.isCastleOOO())
         {
             strcpy(sanMove, "0-0-0");
             return true;
-        }   
-        // start building the string
-        if (!move.isPawnMove()) 
+        }
+
+        // safely build the string using std::string
+        std::string s = "";
+
+        if (!move.isPawnMove())
         {
-            snprintf(sanMove, sizeof(sanMove), "%s", PIECECHARS[piece]);
-            if (ambig) 
+            s += PIECECHARS[piece];
+            if (ambig)
             {
                 if (ambigfile)
                 {
-                    if (ambigrank) snprintf(sanMove, sizeof(sanMove), "%s%c%d", sanMove, FILES[from] + asciiShift - 1,RANKS[from]);
-                    else snprintf(sanMove, sizeof(sanMove), "%s%d", sanMove, RANKS[from]);
+                    if (ambigrank) {
+                        s += (char)(FILES[from] + asciiShift - 1);
+                        s += std::to_string(RANKS[from]);
+                    } else {
+                        s += std::to_string(RANKS[from]);
+                    }
                 }
                 else
                 {
-                    snprintf(sanMove, sizeof(sanMove), "%s%c", sanMove, FILES[from] + asciiShift - 1);
+                    s += (char)(FILES[from] + asciiShift - 1);
                 }
             }
         }
         else
         {
-            if (move.isCapture()) 
+            if (move.isCapture())
             {
-                snprintf(sanMove, sizeof(sanMove), "%s%c", sanMove, FILES[from] + asciiShift - 1);
+                s += (char)(FILES[from] + asciiShift - 1);
             }
         }
-        if (move.isCapture()) snprintf(sanMove, sizeof(sanMove), "%sx", sanMove);
-        snprintf(sanMove, sizeof(sanMove), "%s%c%d", sanMove, FILES[to] + asciiShift - 1, RANKS[to]);
-        if (move.isEnpassant()) snprintf(sanMove, sizeof(sanMove), "%s", sanMove);
-        if (move.isPromo()) snprintf(sanMove, sizeof(sanMove), "%s=%s", sanMove, PIECECHARS[prom]);
+
+        if (move.isCapture()) s += "x";
+
+        s += (char)(FILES[to] + asciiShift - 1);
+        s += std::to_string(RANKS[to]);
+
+        if (move.isPromo())
+        {
+            s += "=";
+            s += PIECECHARS[prom];
+        }
+
         if (check)
         {
-            if (mate) snprintf(sanMove, sizeof(sanMove), "%s#", sanMove); 
-            else snprintf(sanMove, sizeof(sanMove), "%s+", sanMove);
+            if (mate) s += "#";
+            else s += "+";
         }
+
+        // Copy the safely constructed string back to the pointer
+        strcpy(sanMove, s.c_str());
         return true;
     }
 }
