@@ -155,7 +155,7 @@ bool toSan(Move &move, char *sanMove)
     legal = false;
     check = false;
     mate = false;
-    snprintf(sanMove, sizeof(sanMove), "");
+    sanMove[0] = '\0';
 
 
     //  Generate all pseudo-legal moves to be able to remove any ambiguities 

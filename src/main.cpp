@@ -780,12 +780,14 @@ void dealEnd()
 // Display the list of moves of this game.
 void displayGame()
 {
-    if (board.endOfGame)
+    if (board.endOfGame > 0)
     {
         // make a temporary copy of board.gameLine[]
         number = board.endOfGame;
-        GameLineRecord *tmp = new GameLineRecord[number];
-        memcpy(tmp, board.gameLine, number * sizeof(GameLineRecord));
+        size_t numRecords = static_cast<size_t>(number);
+
+        GameLineRecord *tmp = new GameLineRecord[numRecords];
+        memcpy(tmp, board.gameLine, numRecords * sizeof(GameLineRecord));
 
 
         // unmake all moves
@@ -838,12 +840,14 @@ string getGameSequence()
     int count = 1;
     string sequence = "";
 
-    if (board.endOfGame)
+    if (board.endOfGame > 0)
     {
         // make a temporary copy of board.gameLine[]
         number = board.endOfGame;
-        GameLineRecord *tmp = new GameLineRecord[number];
-        memcpy(tmp, board.gameLine, number * sizeof(GameLineRecord));
+        size_t numRecords = static_cast<size_t>(number);
+
+        GameLineRecord *tmp = new GameLineRecord[numRecords];
+        memcpy(tmp, board.gameLine, numRecords * sizeof(GameLineRecord));
 
 
         // unmake all moves

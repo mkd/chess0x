@@ -184,12 +184,12 @@ void makeMove(Move &move)
             board.square[to]          = WHITE_ROOK;
             board.epSquare            = 0;    
             board.fiftyMove++;
-            if (from == A1) 
+            if (from == static_cast<unsigned int>(A1)) 
             {
                 if (board.castleWhite & CANCASTLEOOO)  board.hashkey ^= KEY.wq;
                 board.castleWhite &= ~CANCASTLEOOO;
             }
-            if (from == H1) 
+            if (from == static_cast<unsigned int>(H1)) 
             {
                 if (board.castleWhite & CANCASTLEOO)  board.hashkey ^= KEY.wk;
                 board.castleWhite &= ~CANCASTLEOO;
@@ -333,12 +333,12 @@ void makeMove(Move &move)
             board.square[to]          = BLACK_ROOK;
             board.epSquare            = 0;    
             board.fiftyMove++;
-            if (from == A8)
+            if (from == static_cast<unsigned int>(A8))
             {
                 if (board.castleBlack & CANCASTLEOOO)  board.hashkey ^= KEY.bq;
                 board.castleBlack &= ~CANCASTLEOOO;
             }
-            if (from == H8) 
+            if (from == static_cast<unsigned int>(H8)) 
             {
                 if (board.castleBlack & CANCASTLEOO)  board.hashkey ^= KEY.bk;
                 board.castleBlack &= ~CANCASTLEOO;
@@ -666,12 +666,12 @@ void makeCapture(unsigned int &captured, unsigned int &to)
             board.whitePieces          ^= toBitboard;
             board.totalWhitePieces     -= ROOK_VALUE;
             board.Material           -= ROOK_VALUE;
-            if (to == A1) 
+            if (to == static_cast<unsigned int>(A1)) 
             {
                 if (board.castleWhite & CANCASTLEOOO)  board.hashkey ^= KEY.wq;
                 board.castleWhite &= ~CANCASTLEOOO;
             }
-            if (to == H1) 
+            if (to == static_cast<unsigned int>(H1)) 
             {
                 if (board.castleWhite & CANCASTLEOO)  board.hashkey ^= KEY.wk;
                 board.castleWhite &= ~CANCASTLEOO;
@@ -716,12 +716,12 @@ void makeCapture(unsigned int &captured, unsigned int &to)
             board.blackPieces          ^= toBitboard;
             board.totalBlackPieces     -= ROOK_VALUE;
             board.Material           += ROOK_VALUE;
-            if (to == A8) 
+            if (to == static_cast<unsigned int>(A8)) 
             {
                 if (board.castleBlack & CANCASTLEOOO)  board.hashkey ^= KEY.bq;
                 board.castleBlack &= ~CANCASTLEOOO;
             }
-            if (to == H8) 
+            if (to == static_cast<unsigned int>(H8)) 
             { 
                 if (board.castleBlack & CANCASTLEOO)  board.hashkey ^= KEY.bk;
                 board.castleBlack &= ~CANCASTLEOO;
@@ -1026,7 +1026,7 @@ bool isValidTextMove(string userInputMove, Move &move)
     strcpy(userMove, userInputMove.c_str());
 
     unsigned char userFrom, userTo, userPromote;
-    int i;
+    unsigned int i;
 
     if (strlen(userMove) > 3)
     {

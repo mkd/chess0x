@@ -182,7 +182,8 @@ Move Board::think()
 // The score returned by the algorithm is always from calling qsearch().
 int Board::alphabetapvs(int ply, int depth, int alpha, int beta)
 {
-	int i, j, movesfound, pvmovesfound, val;
+	unsigned int i, j;
+    int movesfound, pvmovesfound, val;
     bool cached = false;
 
 
@@ -387,7 +388,7 @@ int Board::alphabetapvs(int ply, int depth, int alpha, int beta)
 
 
                     // append the latest best PV from deeper plies
-					for (j = ply + 1; j < triangularLength[ply+1]; j++) 
+                    for (j = ply + 1; j < static_cast<unsigned int>(triangularLength[ply+1]); j++)
 						triangularArray[ply][j] = triangularArray[ply+1][j];
 					triangularLength[ply] = triangularLength[ply+1];
 
@@ -716,6 +717,9 @@ void Board::rememberPV()
 // mstostring()
 //
 // convert milliseconds to a time string (hh:mm:ss, mm:ss, s, ms)
+// mstostring()
+//
+// convert milliseconds to a time string (hh:mm:ss, mm:ss, s, ms)
 void mstostring(uint64_t dt, char *timestring)
 {
     uint64_t hh, mm, ss;
@@ -725,20 +729,19 @@ void mstostring(uint64_t dt, char *timestring)
         hh = dt/3600000;
         mm = (dt - 3600000*hh)/60000;
         ss = (dt - 3600000*hh - 60000*mm)/1000;
-        snprintf(timestring, sizeof(timestring), "%02" PRIu64 ":%01" PRIu64 ":%02" PRIu64 "", hh, mm, ss);
+        snprintf(timestring, 8, "%02" PRIu64 ":%01" PRIu64 ":%02" PRIu64 "", hh, mm, ss);
     }
     else if (dt > 60000) 
     {      
         mm = dt/60000;
         ss = (dt - 60000*mm)/1000;
-        snprintf(timestring, sizeof(timestring), "%02" PRIu64 ":%02" PRIu64 "", mm, ss);
+        snprintf(timestring, 8, "%02" PRIu64 ":%02" PRIu64 "", mm, ss);
     }
-    else if (dt > 10000)        snprintf(timestring, sizeof(timestring), "%6.1f%s", float(dt/1000.0), "s");
-    else if (dt > 1000)         snprintf(timestring, sizeof(timestring), "%6.2f%s", float(dt/1000.0), "s");
-    else if (dt > 0)            snprintf(timestring, sizeof(timestring), "%5" PRIu64 "ms", dt);
-    else                        snprintf(timestring, sizeof(timestring), "0ms");
+    else if (dt > 10000)        snprintf(timestring, 8, "%6.1f%s", float(dt/1000.0), "s");
+    else if (dt > 1000)         snprintf(timestring, 8, "%6.2f%s", float(dt/1000.0), "s");
+    else if (dt > 0)            snprintf(timestring, 8, "%5" PRIu64 "ms", dt);
+    else                        snprintf(timestring, 8, "0ms");
 }
-
 
 
 // qsearch
@@ -749,7 +752,7 @@ void mstostring(uint64_t dt, char *timestring)
 // c) no more pawn promotions
 int Board::qsearch(int ply, int alpha, int beta)
 {
-    int i, j, val;
+    int j, val;
 
 
     // check the clock and the input status
@@ -787,7 +790,7 @@ int Board::qsearch(int ply, int alpha, int beta)
 
     // generate captures & promotions: captgen returns a sorted move list
     moveBufLen[ply+1] = captgen(moveBufLen[ply]);
-    for (i = moveBufLen[ply]; i < moveBufLen[ply+1]; i++)
+    for (unsigned int i = moveBufLen[ply]; i < moveBufLen[ply+1]; i++)
     {
         makeMove(moveBuffer[i]);
 
@@ -820,10 +823,9 @@ int Board::qsearch(int ply, int alpha, int beta)
 // Board::selectmove()
 //
 // Re-order the move list so that the best move is selected as the next move to try.
-void Board::selectmove(int &ply, int &i, int &depth, bool &isFollowPV)
+void Board::selectmove(int &ply, unsigned int &i, int &depth, bool &isFollowPV)
 {
-    int j, k;
-    unsigned int best;
+    unsigned int j, k, best;
     Move temp;
 
     if (isFollowPV && depth > 1)

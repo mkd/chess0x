@@ -19,7 +19,7 @@
 
 
 // @file timer.cpp
-#include <sys/timeb.h>
+#include <sys/time.h>
 #include <stdio.h>
 #include "timer.h"
 
@@ -46,8 +46,9 @@ void Timer::init()
     if (!running)
     {
         running = true;
-        ftime(&startBuffer);
-        startTime = startBuffer.time * 1000 + startBuffer.millitm + stopTimeDelta;
+        struct timeval tv;
+        gettimeofday(&tv, NULL);
+        startTime = (tv.tv_sec * 1000ULL) + (tv.tv_usec / 1000ULL) + stopTimeDelta;
     }
 }
 
@@ -61,13 +62,13 @@ void Timer::stop()
     if (running)
     {
         running = false;
-        ftime(&stopBuffer);
-        stopTime = stopBuffer.time * 1000 + stopBuffer.millitm;
+        struct timeval tv;
+        gettimeofday(&tv, NULL);
+        stopTime = (tv.tv_sec * 1000ULL) + (tv.tv_usec / 1000ULL);
         stopTimeDelta = startTime - stopTime;
     }
     return;
 }
-
 
 
 // Timer::reset
@@ -77,8 +78,9 @@ void Timer::reset()
 {
     if (running)
     {
-        ftime(&startBuffer);
-        startTime = startBuffer.time * 1000 + startBuffer.millitm;
+        struct timeval tv;
+        gettimeofday(&tv, NULL);
+        startTime = (tv.tv_sec * 1000ULL) + (tv.tv_usec / 1000ULL);
     }
     else
     {
@@ -97,8 +99,9 @@ void Timer::display()
 {
     if (running)
     {
-        ftime(&currentBuffer);
-        currentTime = currentBuffer.time * 1000 + currentBuffer.millitm;
+        struct timeval tv;
+        gettimeofday(&tv, NULL);
+        currentTime = (tv.tv_sec * 1000ULL) + (tv.tv_usec / 1000ULL);
         printf("%6.2f", (currentTime - startTime)/1000.0);
     }
     else
@@ -116,8 +119,9 @@ void Timer::displayhms()
     int hh, mm, ss;
     if (running)
     {
-        ftime(&currentBuffer);
-        currentTime = currentBuffer.time * 1000 + currentBuffer.millitm;
+        struct timeval tv;
+        gettimeofday(&tv, NULL);
+        currentTime = (tv.tv_sec * 1000ULL) + (tv.tv_usec / 1000ULL);
         hh = (currentTime - startTime)/1000/3600;
         mm = ((currentTime - startTime)-hh*3600000)/1000/60;
         ss = ((currentTime - startTime)-hh*3600000-mm*60000)/1000;
@@ -142,8 +146,9 @@ uint64_t Timer::getms()
 {
     if (running)
     {
-        ftime(&currentBuffer);
-        currentTime = currentBuffer.time * 1000 + currentBuffer.millitm;
+        struct timeval tv;
+        gettimeofday(&tv, NULL);
+        currentTime = (tv.tv_sec * 1000ULL) + (tv.tv_usec / 1000ULL);
         return (currentTime - startTime) ;
     }
     else
@@ -157,6 +162,7 @@ uint64_t Timer::getms()
 // Get the number of milliseconds counted by the system, not the elapsed time.
 uint64_t Timer::getsysms()
 {
-    ftime(&currentBuffer);
-    return (currentBuffer.time * 1000 + currentBuffer.millitm);
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    return (tv.tv_sec * 1000ULL) + (tv.tv_usec / 1000ULL);
 }

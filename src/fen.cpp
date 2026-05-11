@@ -58,12 +58,12 @@ bool readFen(char *filename)
         {
             if (!strcmp(s, "[FEN"))
             {
-                fscanf(fp, "%s", fen);
-                fscanf(fp, "%s", fencolor);           // b or w
-                fscanf(fp, "%s", fencastling);        // -, or KQkq
-                fscanf(fp, "%s", fenenpassant);       // -, or e3, or b6, etc
-                fscanf(fp, "%d", &fenhalfmoveclock);  // int, used for the fifty move draw rule
-                fscanf(fp, "%d", &fenfullmovenumber); // int. start with 1, It is incremented after move by Black
+                if (fscanf(fp, "%s", fen)) return false;
+                if (fscanf(fp, "%s", fencolor)) return false;           // b or w
+                if (fscanf(fp, "%s", fencastling)) return false;        // -, or KQkq
+                if (fscanf(fp, "%s", fenenpassant)) return false;       // -, or e3, or b6, etc
+                if (fscanf(fp, "%d", &fenhalfmoveclock)) return false;  // int, used for the fifty move draw rule
+                if (fscanf(fp, "%d", &fenfullmovenumber)) return false; // int. start with 1, It is incremented after move by Black
             }
 
             if (!foundFEN)

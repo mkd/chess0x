@@ -42,7 +42,7 @@
 uint64_t perft(int ply, int depth)
 {
     uint64_t retVal = 0;     
-    int i;
+    unsigned int i;
 
 
     // count this node

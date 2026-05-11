@@ -19,14 +19,12 @@
 
 
 // @file timer.h
-//
-// TODO: replace this by C++11 timers (using clock_t).
+
 #ifndef _TIMER_H
 #define _TIMER_H
 
 
 
-#include <sys/timeb.h>
 #include "definitions.h"
 
 
@@ -37,9 +35,9 @@ struct Timer
     uint64_t   stopTime;    
     uint64_t   currentTime;
     uint64_t   stopTimeDelta;
-    timeb startBuffer;   
-    timeb stopBuffer;   
-    timeb currentBuffer;
+    //timeb startBuffer;   
+    //timeb stopBuffer;   
+    //timeb currentBuffer;
     bool running;  
 
     void init();               // start the timer

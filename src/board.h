@@ -121,7 +121,7 @@ struct Board
     void initFromSquares(int input[64], unsigned char next, int fiftyM, int castleW, int castleB, int epSq);
     void display();
     void rememberPV();
-    void selectmove(int &ply, int &i, int &depth, bool &followpv); 
+    void selectmove(int &ply, unsigned int &i, int &depth, bool &followpv); 
     void addCaptScore(int &ifirst, int &index);
     int SEE(Move &move);
     Bitboard attacksTo(int &target);
